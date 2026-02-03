@@ -1,0 +1,24 @@
+services:
+  agente-rag:
+    
+    build: .
+    image: rogeriocampos07/rag-agent:v0.1.0
+    container_name: rag_agent_container
+    
+    
+    ports:
+      - "8501:8501"
+    
+    
+    env_file:
+      - .env
+    environment:
+      - CHROMA_DB_PATH=/app/chroma_db  
+    
+    
+    volumes:
+      - .:/app                         
+      - ./chroma_db:/app/chroma_db     
+    
+    
+    restart: unless-stopped
