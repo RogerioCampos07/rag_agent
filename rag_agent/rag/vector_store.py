@@ -7,10 +7,10 @@ from ingestion import load_pdf, split_my_documents
 file_path = "rag_agent/rag/knowledge/Glossário LangChain e Docker 2026.pdf"
 file_path2 = "rag_agent/rag/knowledge/entrega_cervejas_sob_demanda.pdf"
 
-load_docs = load_pdf(file_path2)
+load_docs = load_pdf(file_path)
 all_splits = split_my_documents(load_docs)
 
-embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001",
+model_embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001",
                                           google_api_key=settings.GOOGLE_API_KEY,
                                           max_retries=3,
                                           version="v1")
@@ -18,7 +18,7 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001",
 
 vector_db = Chroma.from_documents(
     documents=all_splits, 
-    embedding=embeddings,
+    embedding=model_embeddings,
     persist_directory="./meu_chroma_db"  
 )
 
